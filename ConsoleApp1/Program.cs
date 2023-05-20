@@ -8,8 +8,6 @@ Console.WriteLine("Hello, World!");
 using (Hwlesson4Context db = new Hwlesson4Context())
 {
 
-
-
 var customers = db.Customers.ToList();
     Console.WriteLine("Customers list:");
 
@@ -58,13 +56,14 @@ string? choise = Console.ReadLine();
         bool parce = int.TryParse(Console.ReadLine(), out Age);
 
 
-        var ListId = from cust in db.Customers
-                     orderby cust.Id
-                     select cust.Id;
-        var LastId = ListId.Last();
+    //    var ListId = from cust in db.Customers
+    //                 orderby cust.Id
+    //                 select cust.Id;
+    //    var LastId = ListId.Last();
 
+        var lastId = db.Customers.OrderBy(p => p.Id).Last().Id;
 
-        Customer NewCustomer = new Customer { Id = LastId + 1, Firstname = FirstName, Lastname = LastName, Email = Email, Age = Age };
+        Customer NewCustomer = new Customer { Id = lastId + 1, Firstname = FirstName, Lastname = LastName, Email = Email, Age = Age };
 
         db.Customers.Add(NewCustomer);        
         db.SaveChanges();
